@@ -1,9 +1,7 @@
 package com.quanglv.web.rest;
 
 import com.quanglv.service.RolesService;
-import com.quanglv.service.UsersService;
 import com.quanglv.web.rest.request.UpdateRolesRequest;
-import com.quanglv.web.rest.request.UpdateUsersRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;

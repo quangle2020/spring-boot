@@ -1,6 +1,6 @@
 package com.quanglv.config;
 
-import com.quanglv.service.impl.CustomUserDetailsService;
+import com.quanglv.config.oauth2.UsersOauthService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -12,15 +12,14 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
-import javax.annotation.Resource;
 
 @Configuration
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true)
-public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
+public class WebSecurityConfig extends WebSecurityConfigurerAdapter{
 
-    @Resource(name = "userCustomService")
-    private CustomUserDetailsService customUserDetailsService;
+    @Autowired
+    private UsersOauthService usersOauthService;
 
     @Override
     @Bean
@@ -30,15 +29,17 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
     public void globalUserDetails(AuthenticationManagerBuilder auth) throws Exception {
-        auth.userDetailsService(customUserDetailsService)
+        auth.userDetailsService(usersOauthService)
                 .passwordEncoder(encoder());
     }
 
-    protected void configure(HttpSecurity httpSecurity) throws Exception {
-        httpSecurity
-                .csrf().disable().anonymous().disable()
+    @Override
+    protected void configure(HttpSecurity http) throws Exception {
+        http
+                .csrf().disable()
+                .anonymous().disable()
                 .authorizeRequests()
-                .antMatchers("/api-all/**").permitAll();
+                .antMatchers("/api-docs/**").permitAll();
     }
 
     @Bean

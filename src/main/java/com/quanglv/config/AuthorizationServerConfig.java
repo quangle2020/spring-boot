@@ -1,6 +1,6 @@
 package com.quanglv.config;
 
-import com.quanglv.constant.AppConstant;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -18,6 +18,19 @@ import org.springframework.security.oauth2.provider.token.store.JwtTokenStore;
 @EnableAuthorizationServer
 public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdapter {
 
+    static final String CLIEN_ID = "client_id";
+    static final String CLIENT_SECRET = "client_secret";
+    static final String GRANT_TYPE_PASSWORD = "password";
+    static final String AUTHORIZATION_CODE = "authorization_code";
+    static final String REFRESH_TOKEN = "refresh_token";
+    static final String IMPLICIT = "implicit";
+    static final String SCOPE_READ = "read";
+    static final String SCOPE_WRITE = "write";
+    static final String TRUST = "trust";
+    static final int ACCESS_TOKEN_VALIDITY_SECONDS = 1*60*60;
+    static final int FREFRESH_TOKEN_VALIDITY_SECONDS = 6*60*60;
+
+
     @Autowired
     private AuthenticationManager authenticationManager;
 
@@ -25,7 +38,7 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
     private BCryptPasswordEncoder encoder;
 
     @Bean
-    public JwtAccessTokenConverter accessTokenConverter(){
+    public JwtAccessTokenConverter accessTokenConverter() {
         JwtAccessTokenConverter converter = new JwtAccessTokenConverter();
         converter.setSigningKey("as466gf");
         return converter;
@@ -36,17 +49,21 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
         return new JwtTokenStore(accessTokenConverter());
     }
 
+    @Override
     public void configure(ClientDetailsServiceConfigurer configurer) throws Exception {
-        configurer.inMemory()
-                .withClient(AppConstant.O2Constants.CLIEN_ID)
-                .secret(encoder.encode(AppConstant.O2Constants.CLIENT_SECRET))
-                .authorizedGrantTypes(AppConstant.O2Constants.GRANT_TYPE_PASSWORD , AppConstant.O2Constants.AUTHORIZATION_CODE , AppConstant.O2Constants.REFRESH_TOKEN , AppConstant.O2Constants.IMPLICIT)
-                .scopes(AppConstant.O2Constants.SCOPE_READ , AppConstant.O2Constants.SCOPE_WRITE , AppConstant.O2Constants.TRUST)
-                .accessTokenValiditySeconds(AppConstant.O2Constants.ACCESS_TOKEN_VALIDITY_SECONDS)
-                .refreshTokenValiditySeconds(AppConstant.O2Constants.FREFRESH_TOKEN_VALIDITY_SECONDS);
+
+        configurer
+                .inMemory()
+                .withClient(CLIEN_ID)
+                .secret(encoder.encode(CLIENT_SECRET))
+                .authorizedGrantTypes(GRANT_TYPE_PASSWORD, AUTHORIZATION_CODE, REFRESH_TOKEN, IMPLICIT )
+                .scopes(SCOPE_READ, SCOPE_WRITE, TRUST)
+                .accessTokenValiditySeconds(ACCESS_TOKEN_VALIDITY_SECONDS)
+                .refreshTokenValiditySeconds(FREFRESH_TOKEN_VALIDITY_SECONDS);
     }
 
-    public void configure(AuthorizationServerEndpointsConfigurer endpoints){
+    @Override
+    public void configure(AuthorizationServerEndpointsConfigurer endpoints) {
         endpoints.tokenStore(tokenStore())
                 .authenticationManager(authenticationManager)
                 .accessTokenConverter(accessTokenConverter());

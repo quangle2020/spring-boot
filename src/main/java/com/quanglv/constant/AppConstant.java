@@ -3,7 +3,8 @@ package com.quanglv.constant;
 public interface AppConstant {
     interface O2Constants {
         final String CLIEN_ID = "client_id";
-        final String CLIENT_SECRET = "client_secret";
+      final String CLIENT_SECRET = "client_secret";
+//        final String CLIENT_SECRET = "$2a$04$e/c1/RfsWuThaWFCrcCuJeoyvwCV0URN/6Pn9ZFlrtIWaU/vj/BfG";
         final String GRANT_TYPE_PASSWORD = "password";
         final String AUTHORIZATION_CODE = "authorization_code";
         final String REFRESH_TOKEN = "refresh_token";
@@ -19,8 +20,8 @@ public interface AppConstant {
         final String RESOURCE_ID = "resource_id";
     }
 
-    interface ACTIVE{
-        final int ACTIVE_STATUS = 1;
-        final int INACTIVE_STATUS = 0;
+    interface STATUS{
+        final Long ACTIVE_STATUS = 1L;
+        final Long INACTIVE_STATUS = 0L;
     }
 }

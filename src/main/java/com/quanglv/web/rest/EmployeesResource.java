@@ -16,8 +16,10 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/admin")
-public class EmployeesResource {
+//@RequestMapping("/api/admin")
+@RequestMapping("/")
+public class EmployeesResource
+{
 
     @Autowired
     private EmployeesService employeesService;

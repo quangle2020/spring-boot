@@ -1,8 +1,6 @@
 package com.quanglv.service.impl;
 
 import com.quanglv.domain.Employees;
-import com.quanglv.domain.Roles;
-import com.quanglv.domain.Users;
 import com.quanglv.repository.EmployeesRepository;
 import com.quanglv.repository.EmployeesRepositoryCustom;
 import com.quanglv.repository.RolesRepository;
@@ -14,7 +12,6 @@ import com.quanglv.service.dto.GetEmployeesOutDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 

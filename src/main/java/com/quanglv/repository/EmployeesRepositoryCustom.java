@@ -9,5 +9,5 @@ public interface EmployeesRepositoryCustom {
      *
      * @return
      */
-    List<EmployeeCusDTO> getEmployeesCus ();
+    List<EmployeeCusDTO> getEmployeesCus();
 }
