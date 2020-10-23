@@ -37,7 +37,6 @@ public class UserPrincipalOauth2 implements UserDetails {
 
         return new UserPrincipalOauth2(
                 users.getUsername(),
-//                users.getFirstChangePass(),
                 users.getStatus(),
                 users.getPassword(),
                 authorities

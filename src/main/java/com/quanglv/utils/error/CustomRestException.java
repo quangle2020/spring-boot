@@ -1,11 +1,15 @@
-package com.quanglv.utils.customError;
+package com.quanglv.utils.error;
 
 import com.quanglv.constant.Constants;
 import org.zalando.problem.AbstractThrowableProblem;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
 
-public class CustomRestException extends AbstractThrowableProblem {
+//public class CustomRestException extends AbstractThrowableProblem {
+public class CustomRestException extends Exception {
 
     private static final long serialVersionUID = 2773490240923183518L;
 
@@ -17,19 +21,12 @@ public class CustomRestException extends AbstractThrowableProblem {
     private Map<String, Object> attributes;
 
     public CustomRestException(Map<String, Object> errorsItem) {
-        if (errorsItem.get(ERRORS_NAME) == null) {
-            List<Map<String, Object>> errList = new ArrayList<>();
-            errList.add(errorsItem);
-            this.attributes = new HashMap<>();
-            this.attributes.put(ERRORS_NAME, errList);
-        } else {
-            this.attributes = errorsItem;
-        }
+        this.attributes = errorsItem;
     }
 
     /**
      * Constructor
-     * 
+     *
      * @param message the message error
      * @param errorsItem Map error
      */
@@ -45,7 +42,7 @@ public class CustomRestException extends AbstractThrowableProblem {
 
     /**
      * Constructor
-     * 
+     *
      * @param message the message error
      * @param errorsItems Map error
      */
@@ -61,18 +58,10 @@ public class CustomRestException extends AbstractThrowableProblem {
         attributes.put(ERRORS_NAME, errorsItems);
     }
 
-    public CustomRestException() {
-
-    }
-
     /**
      * @See graphql.GraphQLError.getExtensions()
      */
     public Map<String, Object> getExtensions() {
         return this.attributes;
-    }
-
-    public void setExtensions(Map<String, Object> attributes) {
-        this.attributes = attributes;
     }
 }

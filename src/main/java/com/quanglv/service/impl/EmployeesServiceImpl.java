@@ -9,6 +9,8 @@ import com.quanglv.service.EmployeesService;
 import com.quanglv.service.dto.EmployeeCusDTO;
 import com.quanglv.service.dto.EmployeesDTO;
 import com.quanglv.service.dto.GetEmployeesOutDTO;
+import com.quanglv.utils.CommonUtils;
+import com.quanglv.utils.error.CustomRestException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -41,16 +43,13 @@ public class EmployeesServiceImpl implements EmployeesService {
      * @return
      */
     @Override
-    public GetEmployeesOutDTO getEmployees(List<Long> employeeIds, Long page, Long size) {
+    public GetEmployeesOutDTO getEmployees(List<Long> employeeIds, Long page, Long size) throws CustomRestException {
+        if (employeeIds == null || employeeIds.size() == 0) {
+            throw new CustomRestException("hehe", CommonUtils.putError("ERR_20", "list null"));
+        }
+
         GetEmployeesOutDTO response = new GetEmployeesOutDTO();
-        int pageConvert = page.intValue();
-        int sizeConvert = size.intValue();
-//        List<Users> user = usersRepository.findAll();
-//        List<Roles> role = rolesRepository.findAll();
-//        List<Employees> employees = employeesRepository.findByEmployeeIdInOrderByEmployeeIdDesc(employeeIds);
-//        Page<Employees> pageE = employeesRepository.findAll(PageRequest.of(pageConvert, sizeConvert, Sort.by("employeeId").ascending()));
-//        List<Employees> employees = employeesRepository.getAll();
-        Page<Employees> pageE = employeesRepository.findAll(PageRequest.of(pageConvert - 1, sizeConvert));
+        Page<Employees> pageE = employeesRepository.findAll(PageRequest.of(page.intValue() - 1, size.intValue()));
         List<EmployeesDTO> listEmployee = new ArrayList<>();
         pageE.forEach(e -> {
             EmployeesDTO dto = new EmployeesDTO();
@@ -68,8 +67,6 @@ public class EmployeesServiceImpl implements EmployeesService {
             listEmployee.add(dto);
         });
         response.setEmployees(listEmployee);
-//        response.setUsers(user);
-//        response.setRoles(role);
         return response;
     }
 
