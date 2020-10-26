@@ -10,7 +10,8 @@ import com.quanglv.service.dto.EmployeeCusDTO;
 import com.quanglv.service.dto.EmployeesDTO;
 import com.quanglv.service.dto.GetEmployeesOutDTO;
 import com.quanglv.utils.CommonUtils;
-import com.quanglv.utils.error.CustomRestException;
+import com.quanglv.utils.error.BadRequestAlertException;
+import com.quanglv.utils.error.CustomException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -43,9 +44,9 @@ public class EmployeesServiceImpl implements EmployeesService {
      * @return
      */
     @Override
-    public GetEmployeesOutDTO getEmployees(List<Long> employeeIds, Long page, Long size) throws CustomRestException {
+    public GetEmployeesOutDTO getEmployees(List<Long> employeeIds, Long page, Long size) {
         if (employeeIds == null || employeeIds.size() == 0) {
-            throw new CustomRestException("hehe", CommonUtils.putError("ERR_20", "list null"));
+            throw new CustomException("err validate", CommonUtils.putError("no param","ERR_002"));
         }
 
         GetEmployeesOutDTO response = new GetEmployeesOutDTO();

@@ -2,9 +2,7 @@ package com.quanglv.web.rest;
 
 import com.quanglv.service.EmployeesService;
 import com.quanglv.service.dto.EmployeeCusDTO;
-import com.quanglv.utils.CommonUtils;
-import com.quanglv.utils.error.CustomException;
-import com.quanglv.utils.error.CustomRestException;
+import com.quanglv.utils.error.BadRequestAlertException;
 import com.quanglv.web.rest.request.GetEmployeesRequest;
 import com.quanglv.web.rest.request.UpdateEmployeesRequest;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,8 +13,8 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-//@RequestMapping("/api")
-@RequestMapping("/")
+@RequestMapping("/api")
+//@RequestMapping("/")
 public class EmployeesResource
 {
 
@@ -27,8 +25,8 @@ public class EmployeesResource
      * getEmployees
      * @return GetEmployeesOutDTO
      */
-    @PostMapping(value = "/get-employees", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<?> getEmployees(@RequestBody GetEmployeesRequest request) throws CustomRestException {
+    @PostMapping(value = "/get-employees", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<?> getEmployees(@RequestBody GetEmployeesRequest request) {
         return ResponseEntity.ok(employeesService.getEmployees(request.getEmployees(), request.getPage(), request.getSize()));
     }
 //    @PostMapping(value = "/get-employees", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
@@ -55,9 +53,8 @@ public class EmployeesResource
     }
 
     @PostMapping(value = "/hehe", produces = MediaType.APPLICATION_JSON_VALUE )
-    public ResponseEntity<?> hehe() throws CustomException{
-
-        throw new CustomException("hehe","duoc khong");
+    public ResponseEntity<?> hehe() throws BadRequestAlertException{
+        throw new BadRequestAlertException("hehe","ok","duoc khong");
     }
 
 }

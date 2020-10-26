@@ -8,8 +8,8 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
-//public class CustomRestException extends AbstractThrowableProblem {
-public class CustomRestException extends Exception {
+public class CustomRestException extends AbstractThrowableProblem {
+//public class CustomRestException extends Exception {
 
     private static final long serialVersionUID = 2773490240923183518L;
 

@@ -3,7 +3,7 @@ package com.quanglv.service;
 import com.quanglv.domain.Employees;
 import com.quanglv.service.dto.EmployeeCusDTO;
 import com.quanglv.service.dto.GetEmployeesOutDTO;
-import com.quanglv.utils.error.CustomRestException;
+import com.quanglv.utils.error.BadRequestAlertException;
 
 import java.util.List;
 
@@ -13,7 +13,7 @@ public interface EmployeesService {
      * @param employeeIds
      * @return
      */
-    GetEmployeesOutDTO getEmployees(List<Long> employeeIds, Long page, Long size) throws CustomRestException;
+    GetEmployeesOutDTO getEmployees(List<Long> employeeIds, Long page, Long size);
 
     /**
      *
